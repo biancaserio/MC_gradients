@@ -111,8 +111,8 @@ for rr in range(nperm):
 print(f'\nCompute within and between network dispersion - as well as hormonal contrast - for {n_rot} permutations')
 
 # dictionaries of lists that will contain the permutation t-values (null distribution of t-values) for WN and BN dispersion hormonal contrasts
-WN_dispersion_perm_tval_hormonal_contrast = {'estradiol_t_val': []}
-BN_dispersion_perm_tval_hormonal_contrast = {'estradiol_t_val': []}
+WN_dispersion_perm_tval_hormonal_contrast = {'estradiol_t_val': [], 'progesterone_t_val': []}
+BN_dispersion_perm_tval_hormonal_contrast = {'estradiol_t_val': [], 'progesterone_t_val': []}
 
 
 
@@ -133,7 +133,7 @@ for i in range(len(yeo7_networks_array_perm)):
 
 
     # dictionary of lists that will contain the current permuation's t values (len of lists is 7 because will contain all 7 networks per permutation iteration)
-    WN_dispersion_perm_tval_hormonal_contrast_temp = {'estradiol_t_val': []}
+    WN_dispersion_perm_tval_hormonal_contrast_temp = {'estradiol_t_val': [], 'progesterone_t_val': []}
 
     
     # iterate over the 7 Yeo networks
@@ -171,7 +171,7 @@ for i in range(len(yeo7_networks_array_perm)):
         print(f'lmer in progress...')
         
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28OC.estradiol}), groups = hormones_28OC.Experiment, exog_re = hormones_28OC.ExperimentDay, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28OC.estradiol, 'progesterone': hormones_28OC.progesterone}), groups = hormones_28OC.Experiment, exog_re = hormones_28OC.ExperimentDay, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -179,10 +179,13 @@ for i in range(len(yeo7_networks_array_perm)):
 
         # save results
         WN_dispersion_perm_tval_hormonal_contrast_temp['estradiol_t_val'].append(results.tvalues['estradiol'])
+        WN_dispersion_perm_tval_hormonal_contrast_temp['progesterone_t_val'].append(results.tvalues['progesterone'])
         
     
     # append to permutation results
     WN_dispersion_perm_tval_hormonal_contrast['estradiol_t_val'].append(WN_dispersion_perm_tval_hormonal_contrast_temp['estradiol_t_val'])
+    WN_dispersion_perm_tval_hormonal_contrast['progesterone_t_val'].append(WN_dispersion_perm_tval_hormonal_contrast_temp['progesterone_t_val'])
+
     
     
     
@@ -191,7 +194,7 @@ for i in range(len(yeo7_networks_array_perm)):
     print(f'---- Computed BN dispersion ----')
     
     # dictionary of lists that will contain the current permuation's t values (len 21 because will contain all 21 comparisons of networks per permutation iteration)
-    BN_dispersion_perm_tval_hormonal_contrast_temp = {'estradiol_t_val': []}
+    BN_dispersion_perm_tval_hormonal_contrast_temp = {'estradiol_t_val': [], 'progesterone_t_val': []}
     
     
     # to keep track the order in which the pairwise comparisons are computed
@@ -221,7 +224,7 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28OC.estradiol}), groups = hormones_28OC.Experiment, exog_re = hormones_28OC.ExperimentDay, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28OC.estradiol, 'progesterone': hormones_28OC.progesterone}), groups = hormones_28OC.Experiment, exog_re = hormones_28OC.ExperimentDay, exog_vc=None)
 
                 # fit model
                 results = model.fit()
@@ -229,11 +232,14 @@ for i in range(len(yeo7_networks_array_perm)):
 
                 # save results
                 BN_dispersion_perm_tval_hormonal_contrast_temp['estradiol_t_val'].append(results.tvalues['estradiol'])
+                BN_dispersion_perm_tval_hormonal_contrast_temp['progesterone_t_val'].append(results.tvalues['progesterone'])
     
     
     # append to permutation results
     BN_dispersion_perm_tval_hormonal_contrast['estradiol_t_val'].append(BN_dispersion_perm_tval_hormonal_contrast_temp['estradiol_t_val'])
-    
+    BN_dispersion_perm_tval_hormonal_contrast['progesterone_t_val'].append(BN_dispersion_perm_tval_hormonal_contrast_temp['progesterone_t_val'])
+
+
     
     
     
@@ -241,13 +247,15 @@ for i in range(len(yeo7_networks_array_perm)):
 
 print(f'\n---- Export results at /data/p_02667/28Me/results/WN and BN_dispersion_perm_tval_hormonal_contrast_null_distr_OC.csv ----')
 
-# pack into arrays 
+# pack into arrays (estradiol and progesterone separately)
 WN_dispersion_perm_tval_estradiol_contrast = np.array(WN_dispersion_perm_tval_hormonal_contrast['estradiol_t_val'])
+WN_dispersion_perm_tval_progesterone_contrast = np.array(WN_dispersion_perm_tval_hormonal_contrast['progesterone_t_val'])
 
 BN_dispersion_perm_tval_estradiol_contrast = np.array(BN_dispersion_perm_tval_hormonal_contrast['estradiol_t_val'])
+BN_dispersion_perm_tval_progesterone_contrast = np.array(BN_dispersion_perm_tval_hormonal_contrast['progesterone_t_val'])
 
 
-# contains the null distribution of t values for the hormonal contrasts on the Within Network dispersion per network (7)
+# contains the null distribution of t values for the hormonal contrasts (estradiol and progesterone separately) on the Within Network dispersion per network (7)
 WN_dispersion_perm_tval_estradiol_contrast_null_distr = {'visual': WN_dispersion_perm_tval_estradiol_contrast.T[0],
 							 'sensory motor': WN_dispersion_perm_tval_estradiol_contrast.T[1], 
                                                    	 'dorsal attention': WN_dispersion_perm_tval_estradiol_contrast.T[2], 
@@ -256,11 +264,20 @@ WN_dispersion_perm_tval_estradiol_contrast_null_distr = {'visual': WN_dispersion
                                                  	 'fronto parietal': WN_dispersion_perm_tval_estradiol_contrast.T[5], 
                                                   	 'DMN': WN_dispersion_perm_tval_estradiol_contrast.T[6]}
 
+WN_dispersion_perm_tval_progesterone_contrast_null_distr = {'visual': WN_dispersion_perm_tval_progesterone_contrast.T[0],
+							    'sensory motor': WN_dispersion_perm_tval_progesterone_contrast.T[1], 
+                                                   	    'dorsal attention': WN_dispersion_perm_tval_progesterone_contrast.T[2], 
+                                                 	    'ventral attention': WN_dispersion_perm_tval_progesterone_contrast.T[3], 
+                                                      	    'limbic': WN_dispersion_perm_tval_progesterone_contrast.T[4], 
+                                                 	    'fronto parietal': WN_dispersion_perm_tval_progesterone_contrast.T[5], 
+                                                  	    'DMN': WN_dispersion_perm_tval_progesterone_contrast.T[6]}
 
 
 # contains the null distribution of t values for the sex contrast on the Between Network pairwise comparisons (21)
 # column names is the pairwise comparison labels (turned into strings)
 BN_dispersion_perm_tval_estradiol_contrast_null_distr = pd.DataFrame(BN_dispersion_perm_tval_estradiol_contrast, columns = [str(pair) for pair in pairwise_comparison_order])  
+BN_dispersion_perm_tval_progesterone_contrast_null_distr = pd.DataFrame(BN_dispersion_perm_tval_progesterone_contrast, columns = [str(pair) for pair in pairwise_comparison_order])  
+
 
 
 
