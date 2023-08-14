@@ -283,9 +283,8 @@ BN_dispersion_perm_tval_progesterone_contrast_null_distr = pd.DataFrame(BN_dispe
 
 # export 
 pd.DataFrame(WN_dispersion_perm_tval_estradiol_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_estradiol_contrast_null_distr_OC.csv', header = True, index = False)
+pd.DataFrame(WN_dispersion_perm_tval_progesterone_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_progesterone_contrast_null_distr_OC.csv', header = True, index = False)
 
 BN_dispersion_perm_tval_estradiol_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_estradiol_contrast_null_distr_OC.csv', header = True, index = False)
+BN_dispersion_perm_tval_progesterone_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_progesterone_contrast_null_distr_OC.csv', header = True, index = False)
 
-
-    
-    
