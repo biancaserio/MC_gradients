@@ -170,8 +170,9 @@ for i in range(len(yeo7_networks_array_perm)):
         ### compute linear model for current network (WN dispersion)
         print(f'lmer in progress...')
         
+        
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.estradiol, 'progesterone': hormones_28Me_excl26.progesterone}), groups = hormones_28Me_excl26.Experiment, exog_re = hormones_28Me_excl26.ExperimentDay, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'progesterone': hormones_28Me_excl26.z_progesterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -224,7 +225,7 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.estradiol, 'progesterone': hormones_28Me_excl26.progesterone}), groups = hormones_28Me_excl26.Experiment, exog_re = hormones_28Me_excl26.ExperimentDay, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'progesterone': hormones_28Me_excl26.z_progesterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
 
                 # fit model
                 results = model.fit()
@@ -281,11 +282,11 @@ BN_dispersion_perm_tval_progesterone_contrast_null_distr = pd.DataFrame(BN_dispe
 
 
 # export 
-pd.DataFrame(WN_dispersion_perm_tval_estradiol_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_estradiol_contrast_null_distr.csv', header = True, index = False)
-pd.DataFrame(WN_dispersion_perm_tval_progesterone_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_progesterone_contrast_null_distr.csv', header = True, index = False)
+pd.DataFrame(WN_dispersion_perm_tval_estradiol_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_estradiol_contrast_null_distr_Me.csv', header = True, index = False)
+pd.DataFrame(WN_dispersion_perm_tval_progesterone_contrast_null_distr).to_csv(resdir+'WN_dispersion_perm_tval_progesterone_contrast_null_distr_Me.csv', header = True, index = False)
 
-BN_dispersion_perm_tval_estradiol_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_estradiol_contrast_null_distr.csv', header = True, index = False)
-BN_dispersion_perm_tval_progesterone_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_progesterone_contrast_null_distr.csv', header = True, index = False)
+BN_dispersion_perm_tval_estradiol_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_estradiol_contrast_null_distr_Me.csv', header = True, index = False)
+BN_dispersion_perm_tval_progesterone_contrast_null_distr.to_csv(resdir+'BN_dispersion_perm_tval_progesterone_contrast_null_distr_Me.csv', header = True, index = False)
 
 
     
