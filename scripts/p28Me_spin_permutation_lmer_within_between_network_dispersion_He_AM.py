@@ -124,12 +124,12 @@ for i in range(len(yeo7_networks_array_perm)):
     
     print(f'---- Computed WN dispersion ----')
     
-    yeo_cog_perm = []  # center of gravity (median) for each network (i.e., network centroid position) (7 x 29)
-    WN_dispersion_perm = []  # Within network dispersion: sum squared Euclidean distance of network nodes to the network centroid at experimental day level (7 x 29)
+    yeo_cog_perm = []  # center of gravity (median) for each network (i.e., network centroid position) (7 x 20)
+    WN_dispersion_perm = []  # Within network dispersion: sum squared Euclidean distance of network nodes to the network centroid at experimental day level (7 x 20)
 
 
     # gradient values
-    g1 = array_aligned_fc_He_AM_G1.T  # transpose to obtain shape (400 x 29) in order to access/index the relevant network nodes
+    g1 = array_aligned_fc_He_AM_G1.T  # transpose to obtain shape (400 x 20 in order to access/index the relevant network nodes
 
 
     # dictionary of lists that will contain the current permuation's t values (len of lists is 7 because will contain all 7 networks per permutation iteration)
