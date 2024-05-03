@@ -39,7 +39,7 @@ print(f'\nLoad the required data')
 
 
 # aligned gradient
-array_aligned_fc_He_AM_G1 = np.genfromtxt(resdir+'array_aligned_fc_He_AM_G1.csv', delimiter=',')
+array_aligned_fc_He_AM_15_G1 = np.genfromtxt(resdir+'array_aligned_fc_He_AM_15_G1.csv', delimiter=',')
 
 # hormone data
 hormones_28He_AM = pd.read_csv(resdir+'hormones_28He_AM.csv', index_col = 0)
@@ -131,7 +131,7 @@ for i in range(len(yeo7_networks_array_perm)):
 
 
     # gradient values
-    g1 = array_aligned_fc_He_AM_G1.T[:,:15]  # transpose to obtain shape (400 x 15) in order to access/index the relevant network nodes
+    g1 = array_aligned_fc_He_AM_15_G1.T  # transpose to obtain shape (400 x 15) in order to access/index the relevant network nodes
 
 
     # dictionary of lists that will contain the current permuation's t values (len of lists is 7 because will contain all 7 networks per permutation iteration)
