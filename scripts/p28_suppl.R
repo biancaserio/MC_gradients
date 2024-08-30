@@ -59,23 +59,18 @@ setwd(codedir)
 
 # Aligned functional gradient loadings 
 array_aligned_fc_G1_excl26 = read.csv(paste(resdir, 'array_aligned_fc_G1_excl26.csv', sep = ''), fileEncoding = 'UTF-8-BOM', header = FALSE)
-array_aligned_fc_He_AM_G1 = read.csv(paste(resdir, 'array_aligned_fc_He_AM_G1.csv', sep = ''), fileEncoding = 'UTF-8-BOM', header = FALSE)
 
 
 # class(array_aligned_G1)
 # typeof(array_aligned_G1)
 dim(array_aligned_fc_G1_excl26)
-dim(array_aligned_fc_He_AM_G1)
 
 
 
 # Descriptives 
 hormones_28Me_excl26 = read.csv(paste(resdir, 'hormones_28Me_excl26.csv', sep = ''), fileEncoding = 'UTF-8-BOM')
-hormones_28He_AM = read.csv(paste(resdir, 'hormones_28He_AM.csv', sep = ''), fileEncoding = 'UTF-8-BOM')
-
 
 str(hormones_28Me_excl26)
-str(hormones_28He_AM)
 
 
 
@@ -85,21 +80,21 @@ source('./permTestEdgeVAR.R')
 
 
 #### original code 
-
-zCoh <- read.csv('./edgewiseCoherence.csv', header = FALSE)
-dat  <- read.csv('./data.efficiency.csv', header = TRUE)
-
-zCoh           <- data.frame(scale(zCoh))
-zDat           <- data.frame(scale(dat[,2:11]))
-colnames(zDat) <- colnames(dat)[2:11]
-
-nEdge <- dim(zCoh)[2]
-
+# 
+# zCoh <- read.csv('./edgewiseCoherence.csv', header = FALSE)
+# dat  <- read.csv('./data.efficiency.csv', header = TRUE)
+# 
+# zCoh           <- data.frame(scale(zCoh))
+# zDat           <- data.frame(scale(dat[,2:11]))
+# colnames(zDat) <- colnames(dat)[2:11]
+# 
+# nEdge <- dim(zCoh)[2]
+# 
 
 
 ### replacing with my variables
 
-zCoh           <- data.frame(array_aligned_fc_G1_excl26)
+zCoh           <- data.frame(array_aligned_fc_G1_excl26)  # dim 29 400
 zDat           <- data.frame(hormones_28Me_excl26)
 #colnames(zDat) <- colnames(hormones_28Me_excl26)[2:11]
 
@@ -130,7 +125,12 @@ nptOut <- foreach(iEdge=1:nEdge, .combine=rbind, .packages='vars') %dopar% {
   
 }
 
+dim(nptOut)
+
+
+
 # Save output.
 #--------------------------------------------------------------------------
 
-save(nptOut, file = 'estroEdgeVAR.rda', compress = 'xz')
+#save(nptOut, file = 'estroEdgeVAR.rda', compress = 'xz')
+write.csv(nptOut, paste(resdir, 'estroEdgeVAR.csv', sep = ''), row.names = FALSE)
