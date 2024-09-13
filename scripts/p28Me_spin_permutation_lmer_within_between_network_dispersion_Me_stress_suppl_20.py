@@ -35,7 +35,6 @@ resdir = '/data/p_02667/28Me/results/'
 
 print(f'\nLoad the required data')
 
-
 ## I didnt change name of variables to avoid errors, but its n = 20 now
 
 # aligned gradient
@@ -43,6 +42,11 @@ array_aligned_fc_G1_excl26 = np.genfromtxt(resdir+'array_aligned_fc_G1_Me_20.csv
 
 # stress data
 behavior_28Me_excl26 = pd.read_csv(resdir+'behavior_28Me_Me_20.csv', index_col = 0)
+
+# hormone data (just because it includes experimental day for LMMs
+hormones_28Me_excl26 = pd.read_csv(resdir+'hormones_Me_20.csv', index_col = 0)
+
+
 
 
 # Yeo network array (Sofie's 17 to 7 network conversion for Schaefer 400 (17 network) parcel order)
@@ -174,7 +178,7 @@ for i in range(len(yeo7_networks_array_perm)):
         
         
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'PSS': behavior_28Me_excl26.z_PSS}), groups = behavior_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'PSS': behavior_28Me_excl26.z_PSS}), groups = behavior_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -225,7 +229,8 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'PSS': behavior_28Me_excl26.z_PSS}), groups = behavior_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'PSS': behavior_28Me_excl26.z_PSS}), groups = behavior_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
+                
 
                 # fit model
                 results = model.fit()

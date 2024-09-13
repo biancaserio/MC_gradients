@@ -174,7 +174,7 @@ for i in range(len(yeo7_networks_array_perm)):
         
         
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -227,7 +227,7 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
 
                 # fit model
                 results = model.fit()

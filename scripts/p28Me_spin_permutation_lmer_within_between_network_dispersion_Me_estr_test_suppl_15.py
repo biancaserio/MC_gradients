@@ -38,7 +38,7 @@ resdir = '/data/p_02667/28Me/results/'
 print(f'\nLoad the required data')
 
 
-## I didnt change name of variables to avoid errors, but its n = 20 now
+## I didnt change name of variables to avoid errors, but its n = 15 now
 
 # aligned gradient
 array_aligned_fc_G1_excl26 = np.genfromtxt(resdir+'array_aligned_fc_G1_Me_15.csv', delimiter=',')
@@ -176,7 +176,7 @@ for i in range(len(yeo7_networks_array_perm)):
         
         
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -229,7 +229,7 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=None, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'estradiol': hormones_28Me_excl26.z_estradiol, 'testosterone': hormones_28Me_excl26.z_testosterone}), groups = hormones_28Me_excl26.Experiment, exog_re=hormones_28Me_excl26.ExperimentDay, exog_vc=None)
 
                 # fit model
                 results = model.fit()

@@ -171,7 +171,7 @@ for i in range(len(yeo7_networks_array_perm)):
         print(f'lmer in progress...')
         
         # define model
-        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'testosterone': hormones_28He_AM.z_total_testosterone_saliva, 'cortisol': hormones_28He_AM.z_cortisol_saliva}), groups = hormones_28He_AM.time, exog_re=None, exog_vc=None)
+        model = sm.MixedLM(endog = sum_of_squares, exog = pd.DataFrame({'testosterone': hormones_28He_AM.z_total_testosterone_saliva, 'cortisol': hormones_28He_AM.z_cortisol_saliva}), groups = hormones_28He_AM.time, exog_re=hormones_28He_AM.session, exog_vc=None)
 			
         # fit model
         results = model.fit()
@@ -224,7 +224,7 @@ for i in range(len(yeo7_networks_array_perm)):
                 print(f'lmer in progress...')
                 
                 # define model
-                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'testosterone': hormones_28He_AM.z_total_testosterone_saliva, 'cortisol': hormones_28He_AM.z_cortisol_saliva}), groups = hormones_28He_AM.time, exog_re=None, exog_vc=None)
+                model = sm.MixedLM(endog = BN_dispersion, exog = pd.DataFrame({'testosterone': hormones_28He_AM.z_total_testosterone_saliva, 'cortisol': hormones_28He_AM.z_cortisol_saliva}), groups = hormones_28He_AM.time, exog_re=hormones_28He_AM.session, exog_vc=None)
 
                 # fit model
                 results = model.fit()
