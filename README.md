@@ -43,4 +43,4 @@ Please address any questions about the analyses or code to [Bianca Serio](mailto
 ### Research poster presented at:
 - Annual Meeting of the Organization for Human Brain Mapping (OHBM), Seoul 2024
 
-![image](https://github.com/biancaserio/MC_gradients/tree/master/Poster.png)
+![image](Poster.png)
