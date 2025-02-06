@@ -43,4 +43,6 @@ Please address any questions about the analyses or code to [Bianca Serio](mailto
 ### Research poster presented at:
 - Annual Meeting of the Organization for Human Brain Mapping (OHBM), Seoul 2024
 
+_Please see Imaging Neuroscience publication for updated results_
+
 ![image](Poster.png)
